@@ -114,7 +114,7 @@ You’ll need:
 
 ### 1️⃣ Clone the Repository
 
-https://github.com/Madhavansathish/Career-Compass.git
+https://github.com/Madhavansathish/Career-Compass.git<br>
 cd Career-Compass
 
 ### 2️⃣ Create a Virtual Environment (Recommended)
@@ -153,7 +153,7 @@ python app.py
 Open your browser and go to:
 
 http://127.0.0.1:5000/
-
+```
 📂 Project Structure
 career-compass/
 │
@@ -178,6 +178,7 @@ career-compass/
     ├── ask_ai.html         # General AI chat UI
     ├── find_jobs.html      # Resume-based job finder
     └── about.html          # About Us page
+```
 📸 Screenshots
 
 These are sample UI screenshots of the running application.
