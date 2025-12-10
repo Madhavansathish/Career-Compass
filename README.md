@@ -114,9 +114,8 @@ You’ll need:
 
 ### 1️⃣ Clone the Repository
 
-```bash
-git clone https://github.com/your-username/career-compass.git
-cd career-compass
+https://github.com/Madhavansathish/Career-Compass.git
+cd Career-Compass
 
 ### 2️⃣ Create a Virtual Environment (Recommended)
 python -m venv venv
@@ -184,8 +183,11 @@ career-compass/
 These are sample UI screenshots of the running application.
 🏠 Landing Page
 <img width="1898" height="831" alt="Screenshot 2025-12-10 124106" src="https://github.com/user-attachments/assets/0777b451-3bcf-4fff-916a-eccac46c1a92" /><br>
+📄 Resume & JD Analysis
 <img width="1901" height="910" alt="Screenshot 2025-12-10 124206" src="https://github.com/user-attachments/assets/66a36e1b-5fcc-4a9b-b35f-ea4cebd89194" /><br>
+🎯 Chat Bot
 <img width="1914" height="904" alt="Screenshot 2025-12-10 124123" src="https://github.com/user-attachments/assets/4acb1446-fa02-4f2d-b04e-e550a1099726" /><br>
+💼 Job Finder
 <img width="1897" height="905" alt="Screenshot 2025-12-10 124151" src="https://github.com/user-attachments/assets/7ef24aeb-4268-41cf-8a0b-e6f3ccb5c5e9" />
 
 
