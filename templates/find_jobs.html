@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Compass – Find Jobs</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-body: #FFFFFF;
+            --text-main: #0F172A;     /* Navy */
+            --text-muted: #64748B;    /* Slate Grey */
+            --accent-pink: #DB2777;   /* Pink */
+            --accent-hover: #BE185D;
+            --border-color: #E2E8F0;
+            --card-bg: #F8FAFC;       /* Very light grey */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .logo span { color: var(--accent-pink); }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 14px;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .back-link:hover {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            width: 100%;
+        }
+
+        /* --- TITLES --- */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 15px;
+        }
+
+        .highlight { color: var(--accent-pink); }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        /* --- UPLOAD SECTION --- */
+        .upload-box {
+            background: var(--card-bg);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .upload-img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .file-input-wrapper {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        input[type="file"] {
+            display: none; /* Hide default input */
+        }
+
+        .file-label {
+            display: inline-block;
+            background: white;
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .file-label:hover {
+            background: var(--text-main);
+            color: white;
+        }
+
+        .file-name {
+            margin: 15px 0;
+            font-weight: 600;
+            color: var(--accent-pink);
+            min-height: 24px;
+        }
+
+        /* --- ACTION BUTTON --- */
+        .btn-primary {
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .btn-primary:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+        }
+
+        /* --- LOADING & ERROR --- */
+        .loading {
+            display: none;
+            text-align: center;
+            color: var(--text-muted);
+            margin: 30px 0;
+        }
+
+        .error {
+            display: none;
+            background: #FEF2F2;
+            color: #DC2626;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* --- RESULTS SECTION --- */
+        .profile-summary {
+            background: #F0F9FF; /* Very light blue for summary */
+            border-left: 4px solid var(--text-main);
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+        }
+
+        .profile-summary h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .results-header {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* --- JOB CARDS --- */
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .job-card {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            transition: box-shadow 0.3s;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border-color: var(--accent-pink);
+        }
+
+        .role-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 10px;
+        }
+
+        .match-reason {
+            background: #FFF1F2; /* Light pink bg */
+            color: var(--accent-pink);
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        /* --- LIST OF JOBS INSIDE CARD --- */
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .job-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+        }
+
+        .job-details h4 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .job-details p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .apply-link {
+            text-decoration: none;
+            color: var(--accent-pink);
+            font-weight: 600;
+            font-size: 14px;
+            border: 1px solid var(--accent-pink);
+            padding: 8px 16px;
+            border-radius: 4px;
+            transition: 0.2s;
+        }
+
+        .apply-link:hover {
+            background: var(--accent-pink);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .job-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            .apply-link {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">Career<span>Compass</span></div>
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+
+    <div class="container">
+        
+        <div class="page-header">
+            <h1 class="page-title">Find Your <span class="highlight">Perfect Match</span></h1>
+            <p class="page-subtitle">Upload your resume. AI will match your skills to live opportunities.</p>
+        </div>
+
+        <div class="upload-box">
+            <img src="https://placehold.co/100x100/DB2777/ffffff?text=PDF&font=montserrat" alt="Upload Icon" class="upload-img">
+            
+            <h3>Upload Your Resume</h3>
+            <p style="color: #64748B; margin-bottom: 20px;">Supported format: PDF only</p>
+
+            <div class="file-input-wrapper">
+                <label for="resume-file" class="file-label">Select PDF File</label>
+                <input type="file" id="resume-file" accept=".pdf" onchange="handleFileSelect(event)">
+            </div>
+
+            <div id="file-name" class="file-name"></div>
+
+            <button id="find-btn" class="btn-primary" onclick="analyzeResume()">Find Matching Jobs</button>
+        </div>
+
+        <div id="loading" class="loading">
+            <p>Analyzing your profile and scanning job market...</p>
+        </div>
+        <div id="error" class="error"></div>
+
+        <div id="results-section" style="display: none;">
+            <div id="profile-summary"></div>
+            
+            <h2 class="results-header">Recommended Positions</h2>
+            <div id="jobs" class="jobs-grid"></div>
+        </div>
+
+    </div>
+
+    <script>
+        let selectedFile = null;
+
+        function handleFileSelect(event) {
+            selectedFile = event.target.files[0];
+            const fileNameDiv = document.getElementById('file-name');
+            
+            if (selectedFile) {
+                fileNameDiv.textContent = `Selected: ${selectedFile.name}`;
+            } else {
+                fileNameDiv.textContent = '';
+            }
+        }
+
+        async function analyzeResume() {
+            if (!selectedFile) {
+                alert('Please upload your resume PDF first.');
+                return;
+            }
+
+            // Elements
+            const loadingEl = document.getElementById('loading');
+            const errorEl = document.getElementById('error');
+            const jobsDiv = document.getElementById('jobs');
+            const profileDiv = document.getElementById('profile-summary');
+            const resultsSection = document.getElementById('results-section');
+            const findBtn = document.getElementById('find-btn');
+
+            const formData = new FormData();
+            formData.append('resume_file', selectedFile);
+
+            // UI Loading State
+            loadingEl.style.display = 'block';
+            errorEl.style.display = 'none';
+            jobsDiv.innerHTML = '';
+            profileDiv.innerHTML = '';
+            resultsSection.style.display = 'none';
+            findBtn.disabled = true;
+            findBtn.textContent = 'Analyzing...';
+
+            try {
+                const resp = await fetch('/api/find-jobs', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await resp.json();
+                
+                loadingEl.style.display = 'none';
+                findBtn.disabled = false;
+                findBtn.textContent = 'Find Matching Jobs';
+
+                if (data.error) {
+                    errorEl.textContent = data.error;
+                    errorEl.style.display = 'block';
+                    return;
+                }
+
+                // Show Results Area
+                resultsSection.style.display = 'block';
+
+                // 1. Profile Summary
+                if (data.profile_summary) {
+                    profileDiv.innerHTML = `
+                        <div class="profile-summary">
+                            <h3>Candidate Profile</h3>
+                            <p>${data.profile_summary}</p>
+                        </div>
+                    `;
+                }
+
+                // 2. Job Roles
+                const roles = data.suggested_roles || [];
+                if (roles.length > 0) {
+                    roles.forEach(role => {
+                        const card = createJobCard(role);
+                        jobsDiv.appendChild(card);
+                    });
+                } else {
+                    errorEl.textContent = 'No matching jobs found based on your resume.';
+                    errorEl.style.display = 'block';
+                }
+
+            } catch (e) {
+                loadingEl.style.display = 'none';
+                findBtn.disabled = false;
+                findBtn.textContent = 'Find Matching Jobs';
+                errorEl.textContent = 'Server error. Please try again.';
+                errorEl.style.display = 'block';
+            }
+        }
+
+        function createJobCard(role) {
+            const card = document.createElement('div');
+            card.className = 'job-card';
+            
+            // Build the specific job list
+            const examples = (role.example_jobs || []).map(job => `
+                <div class="job-item">
+                    <div class="job-details">
+                        <h4>${job.title}</h4>
+                        <p>${job.company} | ${job.location}</p>
+                    </div>
+                    <a href="${job.apply_link}" target="_blank" class="apply-link">Apply Now</a>
+                </div>
+            `).join('');
+            
+            card.innerHTML = `
+                <div class="role-title">${role.role_title}</div>
+                <div class="match-reason">
+                    <strong>Why it matches:</strong> ${role.reason}
+                </div>
+                <div class="job-list">
+                    ${examples}
+                </div>
+            `;
+            
+            return card;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Compass</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & BASICS --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff; /* White Background */
+            color: #0F172A; /* Dark Blue Text */
+            line-height: 1.6;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0%;
+            border-bottom: 1px solid #f1f5f9; /* Very subtle divider */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 35px;
+            color: #0F172A; /* Dark Blue */
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #DB2777; /* Pink Accent */
+        }
+
+        .about-btn {
+            background-color: white;
+            color: #0F172A;
+            border: 2px solid #0F172A;
+            padding: 8px 24px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .about-btn:hover {
+            background-color: #0F172A;
+            color: white;
+        }
+
+        /* --- SECTIONS --- */
+        .section {
+            padding: 100px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* The Container keeps things centered and limited width */
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 80px; /* Space between text and image */
+        }
+
+        /* Flip every second section */
+        .section:nth-child(even) .container {
+            flex-direction: row-reverse;
+        }
+
+        /* --- TEXT STYLING --- */
+        .text-content {
+            flex: 1;
+        }
+
+        .title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 42px;
+            font-weight: 800;
+            color: #0F172A; /* Dark Blue */
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .highlight {
+            color: #DB2777; /* Pink */
+        }
+
+        .description {
+            font-size: 18px;
+            color: #475569; /* Slate grey for paragraphs */
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        /* --- BUTTONS --- */
+        .btn {
+            display: inline-block;
+            background-color: #DB2777; /* Pink Background */
+            color: white;
+            padding: 16px 36px;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #be185d; /* Darker Pink on hover */
+            transform: translateY(-2px);
+        }
+
+        /* --- IMAGES (UPDATED) --- */
+        .visual-content {
+            flex: 1;
+            display: flex;
+            justify-content: center; /* Centers the image box horizontally */
+            align-items: center; /* Centers vertically */
+        }
+
+        .image-box {
+            width: 100%;
+            max-width: 500px;
+            height: 350px;
+            background-color: #f8fafc; /* Very light blue/grey bg */
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* New styles for centering image inside the box */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px; /* Adds space around the image inside the box */
+        }
+
+        .image-box img {
+            /* Ensures image fits within the padded box without distortion */
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain; /* Keeps aspect ratio, shows full image */
+            /* Removed hover transform for cleaner look with contain */
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            background-color: #f8fafc;
+            color: #64748B;
+            font-size: 14px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* --- MOBILE RESPONSIVENESS --- */
+        @media (max-width: 900px) {
+            .section {
+                padding: 60px 20px;
+            }
+
+            .container {
+                flex-direction: column-reverse !important; /* Stack vertically */
+                text-align: center;
+                gap: 40px;
+            }
+            
+            .image-box {
+                max-width: 100%;
+                height: 280px; /* Slightly smaller on mobile */
+                padding: 20px;
+            }
+
+            .title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo">Career<span>Compass</span></div>
+        <button class="about-btn"  onclick="location.href='/about'">About</button>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="text-content">
+                <h2 class="title">Resume <span class="highlight">Intelligence</span></h2>
+                <p class="description">
+                    Stop guessing if your resume is good enough. Upload your document and see exactly how you stack up against industry standards. We will highlight your strengths and identify the gaps holding you back.
+                </p>
+                <button class="btn" onclick="location.href='/analyze'">Analyze Resume</button>
+            </div>
+            <div class="visual-content">
+                <div class="image-box">
+                    <img src="static/resume.png" alt="Resume Analysis Interface">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="text-content">
+                <h2 class="title">Career <span class="highlight">Coaching</span></h2>
+                <p class="description">
+                    Stuck on a salary negotiation or a tough interview question? Chat with our specialist AI to get immediate, actionable advice designed to unblock your career progress.
+                </p>
+                <button class="btn" onclick="location.href='/ask-ai'">Chat Now</button>
+            </div>
+            <div class="visual-content">
+                <div class="image-box">
+                    <img src="static/chatbot 1.png" alt="AI Chat Interface">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="text-content">
+                <h2 class="title">Curated <span class="highlight">Positions</span></h2>
+                <p class="description">
+                    We match your specific skills and experience level to open roles, giving you a curated list of opportunities where you are highly likely to succeed.
+                </p>
+                <button class="btn" onclick="location.href='/find-jobs'">View Matches</button>
+            </div>
+            <div class="visual-content">
+                <div class="image-box">
+                    <img src="static/find jobs.png" alt="Job Matching Interface">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2025 Career Compass. All rights reserved.
+    </footer>
+
+</body>
+</html>

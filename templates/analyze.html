@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Compass – Analyze Resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-body: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --accent-pink: #DB2777;
+            --accent-hover: #BE185D;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 0 10px 40px 10px; 
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* --- LOGO (TOP LEFT) --- */
+        .logo-container {
+            position: absolute;
+            top: 25px;
+            left: 40px;
+            z-index: 10;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 28px;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo span { color: var(--accent-pink); }
+
+        /* --- BACK BUTTON (TOP RIGHT) --- */
+        .top-nav {
+            position: absolute;
+            top: 25px;
+            right: 40px;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 20px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        /* --- CONTAINER --- */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding-top: 80px; 
+            padding-bottom: 60px;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header p {
+            color: var(--text-muted);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- STEP INDICATOR --- */
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .step-indicator::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--border-color);
+            z-index: 0;
+        }
+
+        .step {
+            position: relative;
+            z-index: 1;
+            background: var(--bg-card);
+            padding: 0 10px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .step-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--border-color);
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px auto;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-circle {
+            background: var(--accent-pink);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(219, 39, 119, 0.2);
+        }
+        .step.active { color: var(--text-main); }
+
+        .step.completed .step-circle {
+            background: var(--text-main);
+            color: white;
+        }
+
+        /* --- FORM ELEMENTS --- */
+        .section { display: none; animation: fadeIn 0.4s ease; }
+        .section.active { display: block; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s;
+            background: #FAFAFA;
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: white;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px dashed #CBD5E1;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            background: #FAFAFA;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 10px 0 20px;
+            color: var(--text-muted);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        button.primary-btn {
+            flex: 1;
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button.primary-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        button.secondary-btn {
+            background: white;
+            color: var(--text-muted);
+            border: 1px solid var(--border-color);
+            padding: 14px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        button.secondary-btn:hover {
+            border-color: var(--text-main);
+            color: var(--text-main);
+        }
+
+        button:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+        }
+
+        /* --- RESULTS --- */
+        .result-item {
+            background: #F1F5F9;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--accent-pink);
+        }
+
+        .result-item h3 {
+            color: var(--text-main);
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .result-item p { font-size: 14px; color: #334155; }
+
+        .match-score {
+            font-size: 48px;
+            font-weight: 800;
+            font-family: 'Montserrat', sans-serif;
+            color: var(--accent-pink);
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .skill-tag.missing {
+            background: #FFF1F2;
+            border-color: #FECDD3;
+            color: #BE123C;
+        }
+
+        /* --- CHAT --- */
+        .chat-box {
+            background: #F8FAFC;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            height: 350px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            max-width: 80%;
+            line-height: 1.5;
+        }
+
+        .message.user {
+            background: var(--text-main);
+            color: white;
+            margin-left: auto;
+        }
+
+        .message.ai {
+            background: white;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            margin-right: auto;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input-area input {
+            margin-bottom: 0;
+        }
+
+        .chat-input-area button {
+            width: auto;
+            padding: 0 25px;
+        }
+
+        /* --- UTILS --- */
+        .loading {
+            text-align: center;
+            color: var(--text-muted);
+            margin: 20px 0;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .error {
+            background: #FEF2F2;
+            color: #DC2626;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .card { padding: 20px; }
+            .step-indicator { font-size: 11px; }
+            
+            .logo-container, .top-nav {
+                position: static;
+                text-align: center;
+                margin: 10px 0;
+            }
+            .container {
+                padding-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="logo-container">
+    <a href="/" class="logo">Career<span>Compass</span></a>
+</div>
+
+<div class="top-nav">
+    <a href="/" class="nav-btn">Back to Home</a>
+</div>
+
+<div class="container">
+    
+    <div class="header">
+        <p>Match your profile to a Job Description and see gaps instantly.</p>
+    </div>
+
+    <div class="card">
+        <div class="step-indicator">
+            <div class="step active" id="step1-indicator">
+                <div class="step-circle">1</div>
+                <div>Job Details</div>
+            </div>
+            <div class="step" id="step2-indicator">
+                <div class="step-circle">2</div>
+                <div>Upload Resume</div>
+            </div>
+            <div class="step" id="step3-indicator">
+                <div class="step-circle">3</div>
+                <div>Results & Chat</div>
+            </div>
+        </div>
+
+        <div class="section active" id="section-jd">
+            <h2>Step 1: Provide Job Description</h2>
+            
+            <label>Paste Job Description Text</label>
+            <textarea id="jd-text" rows="6" placeholder="Paste the job role and requirements here..."></textarea>
+
+            <div class="or-divider">OR</div>
+
+            <label>Upload JD (PDF)</label>
+            <input type="file" id="jd-file" accept=".pdf">
+
+            <button id="analyze-jd-btn" class="primary-btn">Next: Upload Resume</button>
+
+            <div id="jd-loading" class="loading" style="display:none;">Processing Job Description...</div>
+            <div id="jd-error" class="results"></div>
+        </div>
+
+        <div class="section" id="section-resume">
+            <h2>Step 2: Upload Your Resume</h2>
+
+            <label>Select your Resume (PDF only)</label>
+            <input type="file" id="resume-file" accept=".pdf">
+
+            <div class="btn-group">
+                <button class="secondary-btn" onclick="goToStep(1)">Back</button>
+                <button id="analyze-resume-btn" class="primary-btn">Compare & Find Match</button>
+            </div>
+
+            <div id="resume-loading" class="loading" style="display:none;">Analyzing your resume against the job...</div>
+            <div id="resume-results-error" class="results"></div>
+        </div>
+
+        <div class="section" id="section-chat">
+            <div class="chat-section">
+                <h2>Analysis Results</h2>
+                
+                <div id="resume-final-results"></div>
+
+                <div style="border-top:1px solid #E2E8F0; margin: 30px 0;"></div>
+
+                <h2>Ask AI: Bridge Your Gaps</h2>
+                <p style="font-size:14px; color:#64748B; margin-bottom:15px;">Ask about missing skills, interview tips, or how to improve your score.</p>
+                
+                <div class="chat-box" id="chat-box">
+                    <div class="message ai">
+                        Hi! I've analyzed your resume. I can help you create a plan to learn the missing skills or tailor your resume. What would you like to know?
+                    </div>
+                </div>
+                
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input" placeholder="Type your question here...">
+                    <button id="send-chat-btn" class="primary-btn" style="width: auto;">Send</button>
+                </div>
+
+                <div class="btn-group" style="margin-top:20px;">
+                    <button class="secondary-btn" onclick="goToStep(2)">Back to Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let jdText = '';
+    let jdAnalysis = {};
+    let resumeAnalysis = {};
+
+    // Helper to manage stepping
+    function goToStep(stepNum) {
+        // Reset all sections
+        document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.step').forEach(el => {
+            el.classList.remove('active');
+            // Remove 'completed' if we are going backwards
+            if(parseInt(el.id.replace('step', '')) >= stepNum) {
+                el.classList.remove('completed');
+            }
+        });
+
+        // Activate target section
+        if (stepNum === 1) {
+            document.getElementById('section-jd').classList.add('active');
+            document.getElementById('step1-indicator').classList.add('active');
+        } 
+        else if (stepNum === 2) {
+            document.getElementById('section-resume').classList.add('active');
+            document.getElementById('step1-indicator').classList.add('completed');
+            document.getElementById('step2-indicator').classList.add('active');
+        } 
+        else if (stepNum === 3) {
+            document.getElementById('section-chat').classList.add('active');
+            document.getElementById('step1-indicator').classList.add('completed');
+            document.getElementById('step2-indicator').classList.add('completed');
+            document.getElementById('step3-indicator').classList.add('active');
+        }
+    }
+
+    document.getElementById('analyze-jd-btn').addEventListener('click', async () => {
+        const jdTextInput = document.getElementById('jd-text').value.trim();
+        const jdFileInput = document.getElementById('jd-file').files[0];
+        const btn = document.getElementById('analyze-jd-btn');
+        const errorDiv = document.getElementById('jd-error');
+
+        if (!jdTextInput && !jdFileInput) {
+            alert('Please provide a job description.');
+            return;
+        }
+
+        const formData = new FormData();
+        if (jdTextInput) formData.append('jd_text', jdTextInput);
+        if (jdFileInput) formData.append('jd_file', jdFileInput);
+
+        // UI State: Loading
+        document.getElementById('jd-loading').style.display = 'block';
+        errorDiv.innerHTML = '';
+        btn.disabled = true;
+        btn.innerText = "Processing...";
+
+        try {
+            const response = await fetch('/analyze-jd', { method: 'POST', body: formData });
+            const data = await response.json();
+            
+            document.getElementById('jd-loading').style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = "Next: Upload Resume";
+
+            if (data.error) {
+                errorDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                return;
+            }
+
+            // SUCCESS: Store data and Jump immediately to Step 2
+            jdText = jdTextInput || 'Uploaded PDF';
+            jdAnalysis = data;
+            
+            goToStep(2); // Jump to Step 2
+
+        } catch (error) {
+            document.getElementById('jd-loading').style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = "Next: Upload Resume";
+            errorDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+        }
+    });
+
+    document.getElementById('analyze-resume-btn').addEventListener('click', async () => {
+        const resumeFile = document.getElementById('resume-file').files[0];
+        const btn = document.getElementById('analyze-resume-btn');
+        const errorDiv = document.getElementById('resume-results-error');
+
+        if (!resumeFile) {
+            alert('Please upload your resume.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('jd_text', jdText);
+        formData.append('jd_analysis', JSON.stringify(jdAnalysis));
+        formData.append('resume_file', resumeFile);
+
+        // UI State: Loading
+        document.getElementById('resume-loading').style.display = 'block';
+        errorDiv.innerHTML = '';
+        btn.disabled = true;
+        btn.innerText = "Analyzing...";
+
+        try {
+            const response = await fetch('/analyze-resume', { method: 'POST', body: formData });
+            const data = await response.json();
+            
+            document.getElementById('resume-loading').style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = "Compare & Find Match";
+
+            if (data.error) {
+                errorDiv.innerHTML = `<div class="error">${data.error}</div>`;
+                return;
+            }
+
+            resumeAnalysis = data;
+
+            // Render Results in Step 3
+            const resultsHtml = `
+                <div class="match-score">${data.match_score}/10</div>
+                
+                <div class="result-item">
+                    <h3>Skills Matched</h3>
+                    <div class="skills-grid">
+                        ${data.skills_found.map(skill => `<div class="skill-tag">${skill}</div>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="result-item">
+                    <h3>Skills Missing</h3>
+                    <div class="skills-grid">
+                        ${data.missing_skills.map(skill => `<div class="skill-tag missing">${skill}</div>`).join('')}
+                    </div>
+                </div>
+
+                <div class="result-item">
+                    <h3>AI Recommendation</h3>
+                    <p>${data.recommendations}</p>
+                </div>
+            `;
+            
+            document.getElementById('resume-final-results').innerHTML = resultsHtml;
+
+            goToStep(3); // Jump to Step 3
+
+        } catch (error) {
+            document.getElementById('resume-loading').style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = "Compare & Find Match";
+            errorDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+        }
+    });
+
+    document.getElementById('send-chat-btn').addEventListener('click', sendMessage);
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    async function sendMessage() {
+        const input = document.getElementById('chat-input');
+        const message = input.value.trim();
+        if (!message) return;
+
+        const chatBox = document.getElementById('chat-box');
+        chatBox.innerHTML += `<div class="message user">${message}</div>`;
+        input.value = '';
+
+        const loadingId = 'loading-' + Date.now();
+        chatBox.innerHTML += `<div id="${loadingId}" class="message ai">Typing...</div>`;
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        try {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: message,
+                    jd_text: jdText,
+                    resume_analysis: resumeAnalysis
+                })
+            });
+            const data = await response.json();
+
+            document.getElementById(loadingId).remove();
+            chatBox.innerHTML += `<div class="message ai">${data.reply}</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+        } catch (error) {
+            document.getElementById(loadingId).textContent = 'Error: Could not get response';
+        }
+    }
+</script>
+</body>
+</html>

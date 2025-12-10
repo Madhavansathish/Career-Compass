@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Compass – Ask AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & VARIABLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-body: #FFFFFF;
+            --bg-message-ai: #F1F5F9; /* Light Slate */
+            --bg-message-user: #0F172A; /* Dark Navy */
+            --text-main: #0F172A;
+            --text-light: #FFFFFF;
+            --text-muted: #64748B;
+            --accent-pink: #DB2777;
+            --accent-hover: #BE185D;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- HEADER --- */
+        .header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            /* Ensures the logo is on the left and back link is on the right */
+            justify-content: space-between;
+            background: white;
+            z-index: 10;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Updated Image Styling to fit circle and balance larger text */
+
+        /* Updated Logo Text Styling */
+        .bot-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px; /* Increased size */
+            font-weight: 800; /* Extra bold */
+            color: var(--text-main);
+            text-transform: uppercase; /* Uppercase style */
+            letter-spacing: -0.5px;
+            line-height: 1;
+        }
+
+        /* Accent color for 'Compass' */
+        .bot-info h2 span {
+            color: var(--accent-pink);
+        }
+
+        .bot-info p {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .back-link:hover {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+            background: #FFF1F7;
+        }
+
+        /* --- CHAT AREA --- */
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Welcome State */
+        .welcome-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            height: 100%;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .welcome-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .welcome-state h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        .welcome-state p {
+            color: var(--text-muted);
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        /* Messages List */
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .message {
+            display: flex;
+            gap: 15px;
+            max-width: 80%;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .avatar-circle {
+            width: 35px;
+            height: 50px;
+            border-radius: 50%;
+            background: #E2E8F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .message.ai .avatar-circle {
+            background: var(--accent-pink);
+            color: white;
+        }
+
+        .message.user .avatar-circle {
+            background: var(--text-main);
+            color: white;
+        }
+
+        .message-content {
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .message.ai .message-content {
+            background: var(--bg-message-ai);
+            color: var(--text-main);
+            border-top-left-radius: 0;
+        }
+
+        .message.user .message-content {
+            background: var(--bg-message-user);
+            color: var(--text-light);
+            border-top-right-radius: 0;
+        }
+
+        /* --- FORMATTING INSIDE CHAT --- */
+        .message-content strong { color: var(--accent-pink); }
+        .message.user .message-content strong { color: #FFD1E6; } /* Light pink for dark bg */
+        
+        .message-content ul { padding-left: 20px; margin: 10px 0; }
+        .message-content h3 { font-size: 16px; margin: 15px 0 5px 0; }
+
+        /* --- SUGGESTIONS --- */
+        .suggestions {
+            padding: 10px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .chip {
+            background: white;
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .chip:hover {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+        }
+
+        /* --- INPUT AREA --- */
+        .input-area {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        textarea {
+            flex: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            resize: none;
+            height: 50px;
+            max-height: 120px;
+            background: #FAFAFA;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+            background: white;
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            background: var(--accent-pink);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .send-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .send-btn:disabled {
+            background: #CBD5E1;
+            cursor: not-allowed;
+        }
+
+        /* --- LOADING ANIMATION --- */
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: #94A3B8;
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out;
+        }
+        .dot:nth-child(1) { animation-delay: -0.32s; }
+        .dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="logo-area">
+           
+            <div class="bot-info">
+                <h2>Career <span>Compass</span></h2>
+                <p>Virtual Career Coach</p>
+            </div>
+        </div>
+        <a href="/" class="back-link">Back to Home</a>
+    </div>
+
+    <div class="chat-container">
+        
+        <div id="welcome-screen" class="welcome-state">
+            <img src="static/chatbot2.png" alt="Welcome Icon" class="welcome-img">
+            <h1>How can I help you?</h1>
+            <p>I can help you prepare for interviews, analyze your skills, or guide your next career move.</p>
+            
+            <div class="suggestions">
+                <div class="chip" onclick="useSuggestion('How do I become a Data Scientist?')">How do I become a Data Scientist?</div>
+                <div class="chip" onclick="useSuggestion('Review my resume summary')">Review my resume summary</div>
+                <div class="chip" onclick="useSuggestion('Interview tips for a Junior Dev')">Interview tips for Junior Dev</div>
+            </div>
+        </div>
+
+        <div id="messages" class="messages" style="display: none;">
+            </div>
+
+        <div class="input-area">
+            <textarea id="user-input" placeholder="Type your career question..." oninput="autoResize(this)"></textarea>
+            <button id="send-btn" class="send-btn" onclick="sendMessage()">&#10148;</button>
+        </div>
+    </div>
+
+    <script>
+        const messagesContainer = document.getElementById('messages');
+        const welcomeScreen = document.getElementById('welcome-screen');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        let isFirstMessage = true;
+
+        // Auto-resize textarea
+        function autoResize(textarea) {
+            textarea.style.height = '50px';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Handle Enter key
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Click on suggestion chips
+        function useSuggestion(text) {
+            userInput.value = text;
+            sendMessage();
+        }
+
+        // Send Message Logic
+        async function sendMessage() {
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            // UI Updates
+            if (isFirstMessage) {
+                welcomeScreen.style.display = 'none';
+                messagesContainer.style.display = 'flex';
+                isFirstMessage = false;
+            }
+
+            addMessage(text, 'user');
+            userInput.value = '';
+            autoResize(userInput);
+            sendBtn.disabled = true;
+
+            // Add Loading Indicator
+            const loadingId = addLoadingIndicator();
+
+            try {
+                // Call Backend API
+                const response = await fetch('/ask-ai-chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await response.json();
+
+                // Remove loading and show response
+                document.getElementById(loadingId).remove();
+                addMessage(data.reply || "I'm having trouble connecting right now.", 'ai', true);
+
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                addMessage("Sorry, something went wrong. Please try again.", 'ai');
+            } finally {
+                sendBtn.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        // Helper: Add Message to UI
+        function addMessage(text, sender, format = false) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender}`;
+
+            // Avatar Logic
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar-circle';
+            avatar.textContent = sender === 'ai' ? 'AI' : 'ME';
+
+            // Content Logic
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            if (format && sender === 'ai') {
+                content.innerHTML = formatText(text);
+            } else {
+                content.textContent = text;
+            }
+
+            if (sender === 'ai') {
+                msgDiv.appendChild(avatar);
+                msgDiv.appendChild(content);
+            } else {
+                msgDiv.appendChild(content); // User message first (flex-reverse handles visual order)
+                msgDiv.appendChild(avatar);
+            }
+
+            messagesContainer.appendChild(msgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Helper: Add Loading Dots
+        function addLoadingIndicator() {
+            const id = 'loading-' + Date.now();
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message ai';
+            msgDiv.id = id;
+
+            const avatar = document.createElement('div');
+            avatar.className = 'avatar-circle';
+            avatar.textContent = 'AI';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.innerHTML = '<div class="typing-dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+
+            msgDiv.appendChild(avatar);
+            msgDiv.appendChild(content);
+            messagesContainer.appendChild(msgDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            return id;
+        }
+
+        // Helper: Simple Markdown Formatter
+        function formatText(text) {
+            // Bold
+            let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            // Headers
+            formatted = formatted.replace(/^### (.*$)/gim, '<h3>$1</h3>');
+            // Lists (simple dash)
+            formatted = formatted.replace(/^- (.*$)/gim, '<ul><li>$1</li></ul>');
+            // Fix nested ULs (hacky but works for simple AI responses)
+            formatted = formatted.replace(/<\/ul>\s*<ul>/g, '');
+            // Line breaks
+            formatted = formatted.replace(/\n/g, '<br>');
+            return formatted;
+        }
+    </script>
+</body>
+</html>

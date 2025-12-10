@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Career Compass – About Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- RESET & SAME VARIABLES AS OTHER PAGES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-body: #FFFFFF;
+            --bg-light: #F8FAFC;
+            --text-main: #0F172A;
+            --text-muted: #64748B;
+            --accent-pink: #DB2777;
+            --accent-hover: #BE185D;
+            --border-color: #E2E8F0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- HEADER (Consistent with Ask AI page) --- */
+        .header {
+            padding: 20px 30px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .bot-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            line-height: 1;
+            margin: 0;
+        }
+
+        .bot-info h2 span {
+            color: var(--accent-pink);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 14px;
+            padding: 10px 20px;
+            border: 2px solid var(--border-color);
+            border-radius: 6px;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .nav-link:hover {
+            border-color: var(--accent-pink);
+            color: var(--accent-pink);
+            background: #FFF1F7;
+        }
+
+        /* --- MAIN CONTENT CONTAINER --- */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero span {
+            color: var(--accent-pink);
+            position: relative;
+        }
+        
+        /* Subtle underline effect for emphasis */
+        .hero span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(219, 39, 119, 0.2); /* Transparent pink */
+            z-index: -1;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* --- MISSION SECTION --- */
+        .mission-section {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 100px;
+        }
+
+        .mission-content { flex: 1; }
+
+        .mission-content h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .mission-image {
+            flex: 1;
+            height: 400px;
+            background: var(--bg-light);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            /* Placeholder visual if no image is available */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #CBD5E1;
+            font-size: 24px;
+        }
+        
+        /* Optional: If you have a generic office/team photo, uncomment below */
+        /* .mission-image img { width: 100%; height: 100%; object-fit: cover; } */
+
+
+        /* --- FEATURES GRID --- */
+        .features-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .features-header h2 {
+             font-family: 'Montserrat', sans-serif;
+             font-size: 32px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--accent-pink);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px rgba(219, 39, 119, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: var(--accent-pink);
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .feature-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+        }
+
+        /* --- CTA SECTION --- */
+        .cta-section {
+            text-align: center;
+            background: var(--text-main);
+            color: white;
+            padding: 60px;
+            border-radius: 20px;
+        }
+
+        .cta-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .cta-section p {
+            color: #94A3B8; /* Lighter slate for contrast against dark bg */
+            margin-bottom: 30px;
+            font-size: 18px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent-pink);
+            color: white;
+            text-decoration: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 18px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: var(--accent-hover);
+            transform: scale(1.05);
+        }
+
+        /* --- ANIMATIONS & RESPONSIVE --- */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 36px; }
+            .mission-section { flex-direction: column; gap: 30px; }
+            .mission-image { height: 250px; width: 100%; }
+            .features-grid { grid-template-columns: 1fr; }
+            .cta-section { padding: 40px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <a href="/" class="logo-area">
+          
+            <div class="bot-info">
+                <h2>Career <span>Compass</span></h2>
+            </div>
+        </a>
+        <a href="/" class="nav-link">Back to Home</a>
+    </div>
+
+    <div class="container">
+        
+        <div class="hero">
+            <h1>Navigating Your Career Journey with <span>Confidence.</span></h1>
+            <p>The modern job market is complex. Career Compass uses advanced AI to turn confusion into clarity, helping you bridge skill gaps and land your next role.</p>
+        </div>
+
+        <section class="mission-section">
+            <div class="mission-content">
+                <h2>Why We Built This</h2>
+                <p>Too often, qualified candidates send resumes into "black holes," never knowing why they didn't get a call back. Job descriptions are vague, and knowing exactly what employers want feels like a guessing game.</p>
+                <br>
+                <p>We believe everyone deserves actionable insights to advance their career. Career Compass was created to demystify the hiring process, giving you the data-driven tools you need to stand out in a crowded market.</p>
+            </div>
+            <div class="mission-image">
+                <div style="text-align: center;">
+                    <span style="font-size: 60px; color: var(--accent-pink);">🚀</span>
+                    <p style="margin-top: 20px; color: var(--text-muted); font-weight: 500;">Empowering Your Growth</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="features-header">
+                 <h2>Our Core Tools</h2>
+                 <p style="color: var(--text-muted);">Two powerful engines designed to accelerate your job search.</p>
+            </div>
+           
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        📄
+                    </div>
+                    <h3>Smart Resume Analysis</h3>
+                    <p>Stop guessing if your resume is "good enough." Our system compares your CV directly against specific job descriptions to identify missing keywords and critical skill gaps that might be holding you back.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        🤖
+                    </div>
+                    <h3>24/7 AI Career Coach</h3>
+                    <p>Need advice on how to learn a missing skill? Want tips for an upcoming interview? Our specialized AI assistant is always available to provide personalized guidance and actionable steps to bridge your gaps.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <h2>Ready to Find Your Path?</h2>
+            <p>Stop searching in the dark. Start using data to drive your career forward today.</p>
+            <a href="/" class="cta-btn">Get Started Now</a>
+        </section>
+
+    </div>
+
+</body>
+</html>
