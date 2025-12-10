@@ -177,3 +177,13 @@ career-compass/
     ├── ask_ai.html         # General AI chat
     ├── find_jobs.html      # Job finder
     └── about.html          # About page
+
+<img width="1898" height="831" alt="Screenshot 2025-12-10 124106" src="https://github.com/user-attachments/assets/78180ced-824d-405c-95c4-4599f493790a" /><br>
+<img width="1901" height="910" alt="Screenshot 2025-12-10 124206" src="https://github.com/user-attachments/assets/2c8d2878-79d1-446b-91b6-1814929927fb" /><br>
+<img width="1914" height="904" alt="Screenshot 2025-12-10 124123" src="https://github.com/user-attachments/assets/4d7e3192-0aff-420b-972b-438448145184" /><br>
+<img width="1897" height="905" alt="Screenshot 2025-12-10 124151" src="https://github.com/user-attachments/assets/2128f4e4-67d9-4f44-b8e7-459061a37770" />
+
+
+
+
+
