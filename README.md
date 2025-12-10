@@ -74,5 +74,59 @@ Before you begin, ensure you have the following installed:
     ```
 
 ## 📂 Project Structure
-career-compass/ │ ├── app.py # Main Flask application file with API routes and logic ├── requirements.txt # List of Python dependencies ├── .env # Environment variables (contains your API key) ├── .gitignore # Specifies files to be ignored by Git ├── README.md # Project documentation │ ├── static/ # Static assets like CSS, images, and JS │ ├── chatbot 3.png # Bot avatar image │ └── ... │ └── templates/ # HTML templates for the different pages ├── index.html # Landing page ├── analyze.html # Resume Analysis page (3-step process) ├── about.html # About Us page ├── ask_ai.html # General AI Chat page └── find_jobs.html # Job Finder page
+career-compass/
+│
+├── app.py
+│   └── Main Flask application file  
+│       - Handles routing  
+│       - Resume & JD analysis API  
+│       - AI chat, skill preparation, and job finder logic  
+│
+├── check.py
+│   └── Optional utility/testing script
+│
+├── requirements.txt
+│   └── List of all Python dependencies required to run the project
+│
+├── .env
+│   └── Environment variables (stores sensitive keys like GOOGLE_API_KEY)
+│
+├── .gitignore
+│   └── Specifies files and folders ignored by Git (e.g., venv, .env)
+│
+├── README.md
+│   └── Project documentation
+│
+├── venv/
+│   └── Python virtual environment (auto-generated, not pushed to GitHub)
+│
+├── static/
+│   └── All static assets (images, icons, etc.)
+│
+│   ├── chatbot1.png
+│   ├── chatbot2.png
+│   ├── jobs.png
+│   └── resume.png
+│
+└── templates/
+    └── HTML templates for all frontend pages
+    │
+    ├── index.html
+    │   └── Landing page (Career Compass home)
+    │
+    ├── analyze.html
+    │   └── Resume & Job Description analysis (3-step process)
+    │
+    ├── prepare_skill.html
+    │   └── Role-based skill preparation roadmap
+    │
+    ├── ask_ai.html
+    │   └── General AI chat interface
+    │
+    ├── find_jobs.html
+    │   └── Resume-based job recommendation page
+    │
+    └── about.html
+        └── About Us page
+
 
