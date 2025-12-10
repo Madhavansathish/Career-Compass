@@ -1,129 +1,125 @@
-🧭 Career Compass – AI-Powered Career Assistant
+# 🧭 Career Compass – AI-Powered Career Assistant
 
-Career Compass is a full-stack AI-powered web application designed to help students and job-seekers confidently navigate their career paths. It analyzes resumes, compares them with job descriptions, identifies skill gaps, generates personalized career guidance, and finds relevant job opportunities — all in one platform.
+Career Compass is a full-stack AI-powered web application that helps students and job-seekers navigate their career paths.  
+It analyzes resumes, compares them with job descriptions, identifies skill gaps, provides personalized guidance, and suggests suitable job roles — all in one place.
 
-Powered by Google Gemini AI, Career Compass acts as a personal career mentor, guiding users from skill development to job application.
+The app uses **Google Gemini (via `google-generativeai`)** for:
+- Resume and JD understanding
+- Skill-gap analysis
+- Career coaching and suggestions
 
-🚀 Features
-📄 Smart Resume Analysis
+---
 
-Upload a Job Description (PDF or text).
+## 🚀 Features
 
-AI extracts:
+### 📄 Smart Resume Analysis
 
-Job role
+1. **Job Description Parsing**
+   - Upload a **Job Description** as:
+     - PDF file, or  
+     - Plain text
+   - AI extracts:
+     - Job role  
+     - Key skills  
+     - Experience range  
+     - Short summary of the role  
 
-Required skills
+2. **Resume vs JD Comparison**
+   - Upload your **resume (PDF)**.
+   - AI compares it against the JD and returns:
+     - **Match score (1–10)**
+     - Skills found in your resume
+     - Missing / weak skills
+     - Strengths
+     - Brief recommendations to improve your match
 
-Experience level
+---
 
-Role summary
+### 🤖 AI Career Coach Chat (Contextual)
 
-Upload a Resume (PDF) and get:
+After running a resume analysis:
 
-Resume–JD Match Score (out of 10)
+- Ask the AI how to:
+  - Improve missing skills
+  - Choose projects to build
+  - Prepare for interviews for that specific role
+- The chat is **aware of your JD + resume analysis**, so responses are not generic.
 
-Extracted skills
+---
 
-Missing skills
+### 💬 General Career AI Chat
 
-Strengths
+- Independent “Ask AI” page.
+- You can ask any career-related question, such as:
+  - How to transition into a new role
+  - What skills to focus on next
+  - How to structure a resume or portfolio
+- Works without uploading a JD or resume.
 
-Personalized improvement suggestions
+---
 
-🤖 AI Career Coach Chat (Contextual)
+### 💼 Job Finder
 
-Chat with AI after resume analysis
+- Upload your resume (PDF).
+- The AI generates:
+  - A short profile summary
+  - Suggested role titles that match your background
+  - Example job listings with:
+    - Job title  
+    - Example company  
+    - Location  
+    - A link to search/apply (e.g. LinkedIn search URL)
 
-Ask:
+---
 
-How to improve weak areas
+### ℹ️ About Page
 
-What projects to build
+- Explains the idea, motivation, and goals behind **Career Compass**.
 
-How to prepare for interviews
+---
 
-💬 General Career AI Chat
+## 🛠️ Tech Stack
 
-Ask any career-related question
+**Backend**
+- Python  
+- Flask
 
-Works independently from resume analysis
+**AI / ML**
+- Google Gemini (`google-generativeai`)
 
-🎯 Skill Preparation Roadmap
+**Document Handling**
+- `pdfplumber` for extracting text from PDFs
 
-Select from multiple predefined roles:
+**Frontend**
+- HTML5  
+- CSS3 (custom styling, responsive layout)
 
-Data Scientist
+**Config / Environment**
+- `python-dotenv` for `.env` management
 
-Software Developer
+---
 
-Cyber Security Analyst
+## 📋 Prerequisites
 
-ML Engineer
+You’ll need:
 
-Cloud Engineer
+- **Python 3.7+**
+- **pip**
+- A **Google AI Studio API Key**  
+  👉 Get one here: https://aistudio.google.com/app/apikey
 
-DevOps Engineer
+---
 
-Product Manager
+## ⚙️ Installation & Setup
 
-Business Analyst
+### 1️⃣ Clone the Repository
 
-Get:
-
-Role summary
-
-Required skills
-
-Topics to learn
-
-Learning resources
-
-Practice questions
-
-💼 Job Finder
-
-Upload resume and get:
-
-AI-generated profile summary
-
-Suggested job roles
-
-Example companies
-
-Direct LinkedIn job search links
-
-ℹ️ About Page
-
-Explains the mission and vision of Career Compass
-
-🛠️ Tech Stack
-Layer	Technology
-Backend	Python, Flask
-AI Model	Google Gemini (gemini-1.5-flash)
-AI SDK	google-generativeai
-PDF Processing	pdfplumber
-Frontend	HTML5, CSS3
-Environment	python-dotenv
-📋 Prerequisites
-
-Before running the project, ensure you have:
-
-Python 3.7+
-
-pip installed
-
-A Google AI Studio API Key
-👉 Get it here: https://aistudio.google.com/app/apikey
-
-⚙️ Installation & Setup
-1️⃣ Clone the Repository
+```bash
 git clone https://github.com/your-username/career-compass.git
 cd career-compass
 
-2️⃣ Create Virtual Environment
+### 2️⃣ Create a Virtual Environment (Recommended)
 python -m venv venv
-
 
 Activate it:
 
@@ -139,51 +135,58 @@ source venv/bin/activate
 3️⃣ Install Dependencies
 pip install -r requirements.txt
 
-4️⃣ Setup Environment Variables
+4️⃣ Set Up Environment Variables
 
-Create a file named .env in the project root:
+Create a .env file in the project root:
 
 GOOGLE_API_KEY=your_actual_api_key_here
 
+
+Make sure this file is not committed to Git (it should be in .gitignore).
+
 ▶️ Running the Application
+
+With the virtual environment activated:
+
 python app.py
 
 
-Open in browser:
+Open your browser and go to:
 
 http://127.0.0.1:5000/
 
 📂 Project Structure
 career-compass/
 │
-├── app.py                  # Main Flask backend
-├── check.py                # Optional utility/testing script
+├── app.py                  # Main Flask backend (routes + AI logic)
+├── check.py                # Optional utility / testing script
 ├── requirements.txt        # Python dependencies
-├── .env                    # API keys (hidden)
-├── .gitignore              # Git ignored files
-├── README.md               # Documentation
-├── venv/                   # Virtual environment
+├── .env                    # Environment variables (API keys, etc.)
+├── .gitignore              # Ignore rules for Git
+├── README.md               # Project documentation
+├── venv/                   # Python virtual environment (local only)
 │
-├── static/
+├── static/                 # Static assets (images, CSS, JS if any)
 │   ├── chatbot1.png
 │   ├── chatbot2.png
 │   ├── jobs.png
 │   └── resume.png
 │
-└── templates/
-    ├── index.html          # Landing Page
-    ├── analyze.html        # Resume vs JD analysis
-    ├── prepare_skill.html # Skill roadmap
-    ├── ask_ai.html         # General AI chat
-    ├── find_jobs.html      # Job finder
-    └── about.html          # About page
+└── templates/              # HTML templates for all pages
+    ├── index.html          # Landing page
+    ├── analyze.html        # Resume + JD analysis (3-step flow)
+    ├── prepare_skill.html  # Role-based skill preparation
+    ├── ask_ai.html         # General AI chat UI
+    ├── find_jobs.html      # Resume-based job finder
+    └── about.html          # About Us page
+📸 Screenshots
 
-<img width="1898" height="831" alt="Screenshot 2025-12-10 124106" src="https://github.com/user-attachments/assets/78180ced-824d-405c-95c4-4599f493790a" /><br>
-<img width="1901" height="910" alt="Screenshot 2025-12-10 124206" src="https://github.com/user-attachments/assets/2c8d2878-79d1-446b-91b6-1814929927fb" /><br>
-<img width="1914" height="904" alt="Screenshot 2025-12-10 124123" src="https://github.com/user-attachments/assets/4d7e3192-0aff-420b-972b-438448145184" /><br>
-<img width="1897" height="905" alt="Screenshot 2025-12-10 124151" src="https://github.com/user-attachments/assets/2128f4e4-67d9-4f44-b8e7-459061a37770" />
-
-
+These are sample UI screenshots of the running application.
+🏠 Landing Page
+<img width="1898" height="831" alt="Screenshot 2025-12-10 124106" src="https://github.com/user-attachments/assets/0777b451-3bcf-4fff-916a-eccac46c1a92" /><br>
+<img width="1901" height="910" alt="Screenshot 2025-12-10 124206" src="https://github.com/user-attachments/assets/66a36e1b-5fcc-4a9b-b35f-ea4cebd89194" /><br>
+<img width="1914" height="904" alt="Screenshot 2025-12-10 124123" src="https://github.com/user-attachments/assets/4acb1446-fa02-4f2d-b04e-e550a1099726" /><br>
+<img width="1897" height="905" alt="Screenshot 2025-12-10 124151" src="https://github.com/user-attachments/assets/7ef24aeb-4268-41cf-8a0b-e6f3ccb5c5e9" />
 
 
 
